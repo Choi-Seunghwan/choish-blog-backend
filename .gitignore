@@ -125,3 +125,5 @@ dmypy.json
 .idea/
 db.sqlite3
 .vscode/
+*.pyc
+api/posts/migrations/0001_initial.py
