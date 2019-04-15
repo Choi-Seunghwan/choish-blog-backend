@@ -1,21 +1,10 @@
-from django.urls import path, include
-from rest_framework.urlpatterns import format_suffix_patterns
-from .views import PostViewSet
+from django.urls import path
+from .views import PostList, PostRetrieveUpdateDestroy
 
-post_list = PostViewSet.as_view({
-    'post': 'create',
-    'get': 'list'
-})
 
-post_detail = PostViewSet.as_view({
-    'get': 'retrieve',
-    'put': 'update',
-    'patch': 'partial_update',
-    'delete': 'destroy'
-})
 
-urlpatterns = format_suffix_patterns([
-    path('', post_list, name='post_list'),
-    path('<int:pk>/', post_detail, name='post_detail'),
-])
+urlpatterns = [
+    path('', PostList.as_view(), name='post_list'),
+    path('post/<slug:slug>/', PostRetrieveUpdateDestroy.as_view(), name='post_detail'),
+]
 

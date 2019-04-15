@@ -7,5 +7,6 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
         
-        fields = ('id', 'title', 'subtitle','contents', 'tag', 'created_at', 'update_at',)
+        fields = ('id', 'title', 'subtitle', 'slug','contents', 'tag', 'created_at', 'update_at',)
         read_only_fields = ('created_at', 'update_at',)
+        
