@@ -1,6 +1,6 @@
 from .serializers import PostSerializer
 from .models import Post
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
@@ -18,3 +18,10 @@ class PostRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
     lookup_field = 'slug'
 
+
+class PostCreate(CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def preform_create(self, serializer):
+        print("When load???")
