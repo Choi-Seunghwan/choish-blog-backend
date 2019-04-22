@@ -12,7 +12,7 @@ from rest_framework import status
 
 
 class PostList(ListAPIView):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by('-created_at')
     serializer_class = PostSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('id', 'title','tag', 'slug' )
@@ -28,24 +28,9 @@ class PostRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
 class PostCreate(CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    
 
-    def preform_create(self, serializer):
-        print("When loading this line???")
-
-    def post(self, request, format=None):
-        print("Post !!!!!")
-        serializer = self.serializer_class(data = request.data)
-        
-        # if serializer.is_valid():
-        #     print(request.data)
-        # print(request.data)
-
-        # file_obj = request.FILES['myblob']
-        # print(file_obj)
-        print(request.data)
-        return Response( status=status.HTTP_200_OK)
-        
-        # return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
-
-        
+    # def post(self, request, format=None):
+    #     print("Post !!!!!")
+    #     serializer = self.serializer_class(data = request.data)
+    #     print(request.data)
+    #     return Response( status=status.HTTP_200_OK)

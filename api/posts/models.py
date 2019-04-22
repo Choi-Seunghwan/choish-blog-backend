@@ -18,7 +18,8 @@ class Post(models.Model):
     slug = models.SlugField(unique=True, allow_unicode=True, default="")
     contents = models.TextField()
     tag = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
+    cover_image_url = models.CharField(max_length=300, default="")
+    created_at = models.DateTimeField(auto_now_add=True )
     update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
