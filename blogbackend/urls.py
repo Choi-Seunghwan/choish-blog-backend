@@ -15,9 +15,16 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+from storage.views import FileUploadView, fileUpload
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-]
+    re_path(r'upload/(?P<filename>[^/]+)$', FileUploadView.as_view()),
+    # path('upload/', fileUpload ),
+]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
