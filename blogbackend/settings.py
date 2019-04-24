@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'api.posts',
+    'api.devlog',
     'storage',
 ]
 
