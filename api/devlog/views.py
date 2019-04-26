@@ -12,3 +12,11 @@ class DevlogList(ListAPIView):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('id', 'title','tag', 'slug' )
     
+class DevlogRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    queryset = Devlog.objects.all()
+    serializer_class = DevlogSerializer
+    lookup_field = 'slug'
+
+class DevlogCreate(CreateAPIView):
+    queryset = Devlog.objects.all()
+    serializer_class = DevlogSerializer
