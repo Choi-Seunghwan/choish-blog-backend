@@ -10,17 +10,30 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import os
+import os, json
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+secret_file = os.path.join(BASE_DIR, 'secrets.json')
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_config(setting, secrets = secrets):
+    try:
+        return secrets[setting]
+    except Exception as e:
+        raise ImproperlyConfigured("setting.py error : " + e)
+
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^7ks(&h*11l#ad3k679s$1282jo3%1&swhg#t-6j60%%h(s^th'
+SECRET_KEY = get_config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,7 +42,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+        
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -95,11 +108,16 @@ WSGI_APPLICATION = 'blogbackend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+DATABASE_CONFIG = get_config("DATABASE")
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': DATABASE_CONFIG["ENGINE"],
+        'NAME': DATABASE_CONFIG["NAME"],
+        'USER': DATABASE_CONFIG["USER"],
+        'PASSWORD': DATABASE_CONFIG["PASSWORD"],
+        'HOST': DATABASE_CONFIG["HOST"],
+        'PORT': DATABASE_CONFIG["PORT"],
     }
 }
 

@@ -25,6 +25,5 @@ from storage.views import FileUploadView, fileUpload
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    re_path(r'upload/(?P<filename>[^/]+)$', FileUploadView.as_view()),
-    # path('upload/', fileUpload ),
+    # re_path(r'upload/(?P<filename>[^/]+)$', FileUploadView.as_view()),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
