@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'api.posts',
     'api.devlog',
     'storage',
+    'authentication',
 ]
 
 REST_FRAMEWORK = {
