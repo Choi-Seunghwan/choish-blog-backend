@@ -130,3 +130,5 @@ api/posts/migrations/0001_initial.py
 
 media/
 secrets.json
+storage/migrations/0001_initial.py
+api/devlog/migrations/0001_initial.py

@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER choiseunghwan.tech@gmail.com
+MAINTAINER Choi Seunghwan <choiseunghwan.tech@gmail.com>
 
 ENV HOMEDIR=/home
 ENV PROJECTDIR=/home/blog
