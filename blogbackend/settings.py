@@ -15,16 +15,17 @@ from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(BASE_DIR)
 
-secret_file = os.path.join(BASE_DIR, 'secrets.json')
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
+# secret_file = os.path.join(BASE_DIR, 'secrets.json')
+# with open(secret_file) as f:
+#     secrets = json.loads(f.read())
 
-def get_config(setting, secrets = secrets):
-    try:
-        return secrets[setting]
-    except Exception as e:
-        raise ImproperlyConfigured("setting.py error : " + e)
+# def get_config(setting, secrets = secrets):
+#     try:
+#         return secrets[setting]
+#     except Exception as e:
+#         raise ImproperlyConfigured("setting.py error : " + e)
 
 
 
@@ -33,12 +34,12 @@ def get_config(setting, secrets = secrets):
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_config("SECRET_KEY")
+SECRET_KEY = os.getenv('DJANGO_SECRETKEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -78,6 +79,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # Must be ahead of other middleware
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -109,16 +111,16 @@ WSGI_APPLICATION = 'blogbackend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-DATABASE_CONFIG = get_config("DATABASE")
+# DATABASE_CONFIG = get_config("DATABASE")
 
 DATABASES = {
     'default': {
-        'ENGINE': DATABASE_CONFIG["ENGINE"],
-        'NAME': DATABASE_CONFIG["NAME"],
-        'USER': DATABASE_CONFIG["USER"],
-        'PASSWORD': DATABASE_CONFIG["PASSWORD"],
-        'HOST': DATABASE_CONFIG["HOST"],
-        'PORT': DATABASE_CONFIG["PORT"],
+        'ENGINE': "django.db.backends.postgresql",
+        'NAME': os.getenv('DATABASE_DB'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
 }
 
@@ -161,6 +163,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL =  '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "media"),
+]
+
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL =  '/media/'
+

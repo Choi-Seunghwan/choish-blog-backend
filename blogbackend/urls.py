@@ -22,8 +22,11 @@ from django.conf.urls.static import static
 
 from storage.views import FileUploadView, fileUpload
 
+from django.views.static import serve
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     # re_path(r'upload/(?P<filename>[^/]+)$', FileUploadView.as_view()),
+    re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), #!이슈 nginx로 media 파일 재구성 해야 함.
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

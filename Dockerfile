@@ -5,6 +5,8 @@ ENV HOMEDIR=/home
 ENV PROJECTDIR=/home/blog
 ENV BACKENDDIR=/home/blog/backend
 
+EXPOSE 8000
+
 RUN apt-get update
 RUN apt-get install -y software-properties-common
 RUN apt-get install -y netcat
@@ -23,6 +25,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-# CMD [ "python3", "./manage.py makemigrations"]
-# CMD [ "python3", "./manage.py migrate"]
-# CMD [ "python3", "./manage.py runserver 0.0.0.0:8000"
+# CMD [ "sh", "-c", "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py initadmin && python3 manage.py runserver 0.0.0.0:8000"]
