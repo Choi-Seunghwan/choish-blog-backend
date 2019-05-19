@@ -131,3 +131,5 @@ api/posts/migrations/0001_initial.py
 secrets.json
 storage/migrations/0001_initial.py
 api/devlog/migrations/0001_initial.py
+media/
+staticfiles/
