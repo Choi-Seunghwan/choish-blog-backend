@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'api.posts',
     'api.devlog',
+    'api.lifelog',
     'storage',
     'authentication',
 ]
