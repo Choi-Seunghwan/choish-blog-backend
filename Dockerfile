@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 MAINTAINER Choi Seunghwan <choiseunghwan.tech@gmail.com>
 
 ENV HOMEDIR=/home
@@ -13,15 +13,14 @@ RUN apt-get install -y netcat
 RUN add-apt-repository ppa:ubuntu-toolchain-r/ppa
 RUN apt-get update
 
-RUN apt install -y python3.7 python3-pip python3-dev libpq-dev build-essential
-RUN apt-get install -y git
-
-# update pip
+RUN apt install -y python3 python3-setuptools build-essential python3-dev  
+RUN apt install -y python3-pip
+RUN apt install -y libpq-dev
 RUN pip3 install --upgrade pip
 
 WORKDIR $BACKENDDIR
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 COPY . .
 
